@@ -25,7 +25,7 @@ df = load_data()
 
 # Vista previa de datos
 st.subheader("Dataset Preview")
-st.dataframe(df.head())
+st.dataframe(df.dropna().head())
 
 # Información general
 st.subheader("Dataset Information")
