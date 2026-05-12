@@ -98,5 +98,5 @@ if st.button("Show Random Vehicle Sample"):
     st.subheader("Random Vehicle Sample")
 
     st.dataframe(
-        df.sample(5)
+        df.dropna().sample(5)
     )
