@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+from data_loader import load_data
 import streamlit as st
 
 # Configuración de página
@@ -20,11 +21,11 @@ different relationships and distributions in the data.
 """)
 
 # Cargar datos
-car_data = pd.read_csv('../data/vehicles_us.csv')
+df = load_data()
 
 # Vista previa de datos
 st.subheader("Dataset Preview")
-st.dataframe(car_data.head())
+st.dataframe(df.head())
 
 # Información general
 st.subheader("Dataset Information")
@@ -32,13 +33,13 @@ st.subheader("Dataset Information")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric("Total Vehicles", len(car_data))
+    st.metric("Total Vehicles", len(df))
 
 with col2:
-    st.metric("Average Price", f"${int(car_data['price'].mean())}")
+    st.metric("Average Price", f"${int(df['price'].mean())}")
 
 with col3:
-    st.metric("Average Odometer", f"{int(car_data['odometer'].mean())} mi")
+    st.metric("Average Odometer", f"{int(df['odometer'].mean())} mi")
 
 # Línea divisoria
 st.markdown("---")
@@ -53,7 +54,7 @@ if hist_checkbox:
     st.subheader("Vehicle Price Distribution")
 
     fig_hist = px.histogram(
-        car_data,
+        df,
         x="price",
         nbins=50,
         title="Distribution of Vehicle Prices",
@@ -76,7 +77,7 @@ if scatter_checkbox:
     st.subheader("Price vs Odometer")
 
     fig_scatter = px.scatter(
-        car_data,
+        df,
         x="odometer",
         y="price",
         color="type",
@@ -97,5 +98,5 @@ if st.button("Show Random Vehicle Sample"):
     st.subheader("Random Vehicle Sample")
 
     st.dataframe(
-        car_data.sample(5)
+        df.sample(5)
     )
